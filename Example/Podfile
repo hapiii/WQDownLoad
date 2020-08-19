@@ -1,0 +1,14 @@
+use_frameworks!
+
+platform :ios, '8.0'
+
+target 'WQDownLoad_Example' do
+  pod 'WQDownLoad', :path => '../'
+
+  target 'WQDownLoad_Tests' do
+    inherit! :search_paths
+
+    pod 'Kiwi'
+    pod 'FBSnapshotTestCase'
+  end
+end
