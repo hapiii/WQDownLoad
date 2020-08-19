@@ -1,0 +1,36 @@
+{
+  "name": "WQDownLoad",
+  "version": "0.1.0",
+  "summary": "A short description of WQDownLoad.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/hapiii/WQDownLoad",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "hapiii": "869932084@qq.com"
+  },
+  "source": {
+    "git": "https://github.com/hapiii/WQDownLoad.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "8.0"
+  },
+  "source_files": "WQDownLoad/Classes/**/*",
+  "dependencies": {
+    "YYKit": [
+
+    ],
+    "AFNetworking": [
+
+    ],
+    "FMDB": [
+
+    ],
+    "SDWebImage": [
+
+    ]
+  }
+}

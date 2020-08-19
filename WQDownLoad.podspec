@@ -9,7 +9,7 @@
 Pod::Spec.new do |s|
   s.name             = 'WQDownLoad'
   s.version          = '0.1.0'
-  s.summary          = 'A short description of WQDownLoad.'
+  s.summary          = 'iOS 下载框架'
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
@@ -18,7 +18,7 @@ Pod::Spec.new do |s|
 #   * Finally, don't worry about the indent, CocoaPods strips it!
 
   s.description      = <<-DESC
-TODO: Add long description of the pod here.
+iOS 下载框架,视频配套信息存储基于FMDB, 下载实现基于NSURLSessionDataTask+audio airplay and picture in picture后台播放无声音频 (NSURLSessionDownloadTask功能未完善,后台下载数据库操作,resumeData问题)
                        DESC
 
   s.homepage         = 'https://github.com/hapiii/WQDownLoad'
@@ -32,11 +32,15 @@ TODO: Add long description of the pod here.
 
   s.source_files = 'WQDownLoad/Classes/**/*'
   
-  # s.resource_bundles = {
-  #   'WQDownLoad' => ['WQDownLoad/Assets/*.png']
-  # }
+   s.resource_bundles = {
+     'WQDownLoad' => ['WQDownLoad/Assets/*']
+   }
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
-  # s.dependency 'AFNetworking', '~> 2.3'
+    s.dependency 'YYKit'
+    s.dependency 'AFNetworking'
+    s.dependency 'FMDB'
+    s.dependency 'SDWebImage'
+    
 end
