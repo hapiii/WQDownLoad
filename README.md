@@ -8,13 +8,13 @@
 ## Desc
 1. AppDelegate 里 在didFinishLaunchingWithOptions里实现:
 
-```
+```objc
 [[WQDownLoadManager shareInstance] applicationDidFinishLaunching];
 ```
 
 2. 下载单个信息:
 
-```
+```objc
 WQDownLoadModel *model = [[WQDownLoadModel alloc] init];
 model.video_title = self.courseInfo.title;
 model.video_id = self.courseInfo.video_id;
@@ -36,7 +36,7 @@ model.course_name = self.courseInfo.courseTitle;
 
 3. 配置多选下载数据
 
-```
+```objc
 WQDownLoadChooseController *vc = [[WQDownLoadChooseController alloc] init];
 NSString *sectionKey = self.couseInfo.IndexArr[section];
 NSArray *arr = self.couseInfo.courses[sectionKey];
@@ -63,7 +63,7 @@ vc.title = sectionModel.title;
 4. WQDownLoadManagerDelegate 下载进度及情况回调
 添加代理:
 
-```
+```objc
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
@@ -80,7 +80,7 @@ vc.title = sectionModel.title;
 代理方法:
 
 
-```
+```objc
 - (void)downloadManagerDidPause:(WQDownLoadModel *)downloadTaskModel {
     [self reloadCellWithVideo:downloadTaskModel];
 }
@@ -110,7 +110,7 @@ vc.title = sectionModel.title;
 
 cellHash配置,key为engineKey,value为index,便于reloadCell UI,如果tableView数据刷新,要再次重新配置
 
-```oc
+```objc
 for (int i = 0; i < _datas.count; i++) {
     WQDownLoadModel *video = _datas[i];
     [_videohash setObject:[NSIndexPath indexPathForRow:i inSection:0] forKey:video.engineKey];
