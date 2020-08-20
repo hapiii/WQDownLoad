@@ -141,6 +141,8 @@ static WQDownLoadSessionManager *manager;
             [engine engineTask:task didCompleteWithError:error];
         } else {
             if (error) {
+                [task cancel];
+                //如果下载失败不会继续下载,重新建立task
                 NSMutableURLRequest *mutableURLRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:engine.video.download_url]];
                 NSString *requestRange = [NSString stringWithFormat:@"bytes=%llu-", engine.video.completed_size];
                 [mutableURLRequest setValue:requestRange forHTTPHeaderField:@"Range"];

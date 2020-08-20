@@ -35,7 +35,7 @@ iOS 下载框架,视频配套信息存储基于FMDB, 下载实现基于NSURLSess
    s.resource_bundles = {
      'WQDownLoad' => ['WQDownLoad/Assets/*']
    }
-
+{"name"=>["hapii"], "email"=>["869932084@qq.com"]}
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
     s.dependency 'YYKit'

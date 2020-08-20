@@ -16,6 +16,7 @@
 @end
 
 @implementation WQDownLoadAudioPlayer
+
 + (void)load {
     [WQDownLoadAudioPlayer shareManager];
 }

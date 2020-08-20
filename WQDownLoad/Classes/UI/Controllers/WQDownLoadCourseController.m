@@ -142,9 +142,9 @@
         WQDownLoadSessionEngine *engine =  [WQDownLoadManager shareInstance].allEngineHash[model.engineKey];
         if (engine) {
             if (engine.video.download_state == WQDownLoadVideoStateDownloading) {//暂停下载
-                [[WQDownLoadManager shareInstance] pauseDownloadTask:model];
+                [[WQDownLoadManager shareInstance] pauseDownloadTask:engine.video];
             }else if (engine.video.download_state == WQDownLoadVideoStateSuspended || engine.video.download_state == WQDownLoadVideoStateReadying || engine.video.download_state == WQDownLoadVideoStateError) {///开始下载
-                [[WQDownLoadManager shareInstance] startDownloadTask:model];
+                [[WQDownLoadManager shareInstance] startDownloadTask:engine.video];
             }
         }else {
             

@@ -87,10 +87,17 @@ static WQDownLoadManager *manager;
 
 ///启动app
 - (void)applicationDidFinishLaunching {
-    NSArray <WQDownLoadModel *>*models =  [[WQDownLoadModelDBManager shareMnager] downLoadFailedModels];
-    for (WQDownLoadModel *video in models) {
-        [self createEngineWithVideoModel:video];
-    }
+    /*延迟3秒的原因:
+    app启动时task请求不成功,多次循环 创建task->请求->didCompleteWithError 直到didReceiveData成功
+    造成的后果是同一个任务创建了多个task,后期暂停某个任务时,其他task仍会走didReceiveData ,造成任务无法暂停
+    */
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(4 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        NSArray <WQDownLoadModel *>*models =  [[WQDownLoadModelDBManager shareMnager] downLoadFailedModels];
+        for (WQDownLoadModel *video in models) {
+            [self createEngineWithVideoModel:video];
+        }
+    });
+    
 }
 
 ///将要回到前台
@@ -127,7 +134,6 @@ static WQDownLoadManager *manager;
 - (void)addDownloadTaskWithTask:(WQDownLoadModel *)videoInfo errorHandle:(void(^)(BOOL success,  NSString *errorMsg))errorHandle {
     
     if (!videoInfo) {
-        
         errorHandle(NO,@"未找到下载信息");
         return;
     }

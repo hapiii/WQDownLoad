@@ -124,8 +124,6 @@
             [_taskDelegate downloadEngine:self handleEngineErrorWithDownloadModel:self.video downloadError:error];
         }
     }
-    
-    
 }
 
 ///后台下载完成
