@@ -5,7 +5,7 @@
 [![License](https://img.shields.io/cocoapods/l/WQDownLoad.svg?style=flat)](https://cocoapods.org/pods/WQDownLoad)
 [![Platform](https://img.shields.io/cocoapods/p/WQDownLoad.svg?style=flat)](https://cocoapods.org/pods/WQDownLoad)
 
-## Desc
+## Usage
 1. AppDelegate 里 在didFinishLaunchingWithOptions里实现:
 
 ```objc
@@ -116,6 +116,54 @@ for (int i = 0; i < _datas.count; i++) {
     [_videohash setObject:[NSIndexPath indexPathForRow:i inSection:0] forKey:video.engineKey];
 }
 ```
+
+## Architecture
+下载采用
+#### WQDownLoadModel
+
+为FMDB实体模型类,包含数据库要存储的数据以及部分getter属性,video_parameter参数用于扩展其他参数
+#### WQDownLoadAudioPlayer
+
+后台播放无声音频的管理者
+
+* 内部观察了DidEnterBackground和WillEnterForeground来控制播放暂停
+
+#### WQDownLoadModelDBManager 
+
+* 数据库管理者
+* 封装了一些model更新
+* 下载数据获取
+
+#### WQDownLoadSessionEngine
+
+下载引擎,核心类
+
+* video下载视频的model信息 
+* dataTask(task)下载任务dataTask(downloadTask)
+* 外部公开 开始,暂停,取消 三个操作.以及供WQDownLoadSessionManager调用的下载进度和状态
+* 内部操作数据库的下载状态,以及将下载信息回调到WQDownLoadManager
+
+#### WQDownLoadSessionManager
+
+NSURLSession管理者
+
+* 创建task
+* 将SessionDelegate 分发给各个单独的Engine
+
+
+#### WQDownLoadManager
+任务调度,进度回调,核心类
+
+* 添加listener并将进度回调给listener
+* 任务管理(添加,删除,暂停)的单个操作或多个操作
+* applicationDidFinishLaunching 进入app下载未完成的任务
+
+
+## TODO
+
+* downloadTask下载时数据库操作不太理想,做了一半换成了DataTask
+* didCompleteWithError之后新建一个task可能会导致无法暂停
+* 目前项目没有直接提供下载Url,但是下载时请求的Url是有时效性的,url过期为处理(与后台统一code重新请求)
 
 ## Example
 

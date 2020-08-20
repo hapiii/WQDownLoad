@@ -63,6 +63,7 @@
 - (void)pausePlay {
      [self.audioPlayer pause];
 }
+
 - (AVAudioPlayer *)audioPlayer {
     if (!_audioPlayer) {
          NSString *soundPath = [[NSBundle mainBundle]pathForResource:@"slice" ofType:@"m4a"];
