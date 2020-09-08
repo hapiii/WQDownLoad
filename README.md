@@ -4,7 +4,6 @@
 [![Version](https://img.shields.io/cocoapods/v/WQDownLoad.svg?style=flat)](https://cocoapods.org/pods/WQDownLoad)
 [![License](https://img.shields.io/cocoapods/l/WQDownLoad.svg?style=flat)](https://cocoapods.org/pods/WQDownLoad)
 [![Platform](https://img.shields.io/cocoapods/p/WQDownLoad.svg?style=flat)](https://cocoapods.org/pods/WQDownLoad)
-[![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg?style=flat)](https://travis-ci.org/hapiii/HPThemeKit)
 [![Support](https://img.shields.io/badge/Support-iOS%208%2B-blue.svg?style=flat)](https://www.apple.com/nl/ios/)
 
 ## Effect
