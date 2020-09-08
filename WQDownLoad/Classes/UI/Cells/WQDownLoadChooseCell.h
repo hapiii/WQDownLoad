@@ -17,6 +17,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) WQDownLoadModel *video;
 
+@property (nonatomic, assign) BOOL canDownload;
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -43,7 +43,7 @@
 }
 
 - (void)configUI {
-    
+    self.tintColor = [UIColor colorWithHexString:kDownLoadColor];
     self.selectionStyle = UITableViewCellSelectionStyleDefault;
     self.titleLab = [[UILabel alloc] init];
     self.titleLab.numberOfLines = 2;
@@ -85,7 +85,6 @@
         convertedValue /= 1024;
         multiplyFactor++;
     }
-    
     return [NSString stringWithFormat:@"%4.2f %@",convertedValue, [tokens objectAtIndex:multiplyFactor]];
 }
 
@@ -99,7 +98,6 @@
     self.videoDurationLab.text = [NSString stringWithFormat:@"下载时间:%@",[dateFormatter stringFromDate:video.create_time]];
     self.videoSizeLab.text = [NSString stringWithFormat:@"视频大小:%@",[self transformedValue:video.completed_size]];
     [self.actionBtn setImage:[UIImage imageNamed:@"download_play"] forState:UIControlStateNormal];
-   
 }
 
 - (void)actionBtnClick {

@@ -18,7 +18,6 @@
 #import "WQDownLoadSessionManager.h"
 #import "WQURLSessionDownloadTaskDelegate.h"
 #import "WQDownLoadModel.h"
-#import "WQDownLoadTaskEnginePool.h"
 #import "WQDownLoadCell.h"
 #import "WQDownLoadChooseCell.h"
 #import "WQDownLoadCourseCell.h"

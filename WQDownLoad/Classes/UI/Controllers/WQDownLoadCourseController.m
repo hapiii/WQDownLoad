@@ -147,21 +147,16 @@
                 [[WQDownLoadManager shareInstance] startDownloadTask:engine.video];
             }
         }else {
-            
-            NSDictionary *hash = @{
-                @"url":model.document_local_path,
-                @"title":model.video_title
-            };
-            [self gotoLocalPlay:hash];
+    
+            [self gotoLocalPlay:model];
             
         }
     };
     return cell;
 }
 
-- (void)gotoLocalPlay:(NSDictionary *)playInfo {
+- (void)gotoLocalPlay:(WQDownLoadModel *)playInfo {
 //    MKPlayerController *vc = [[MKPlayerController alloc] init];
-//    vc.localHash = playInfo;
 //    [self.navigationController pushViewController:vc animated:YES];
 }
 

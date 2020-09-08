@@ -17,6 +17,7 @@
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray *selectDatas;
 @property (nonatomic, strong) UIButton *downLoadBtn;
+
 @end
 
 @implementation WQDownLoadChooseController
@@ -30,16 +31,9 @@
 }
 
 - (void)configUI {
-    
-    CGFloat navHeight =  0;
-    UIWindow *window = [UIApplication sharedApplication].keyWindow;
-    if (@available(iOS 11.0, *)) {
-        UIEdgeInsets safeAreaInsets = window.safeAreaInsets;
-        navHeight = safeAreaInsets.bottom > 0 ? self.navigationController.navigationBar.frame.size.height + [[UIApplication sharedApplication] statusBarFrame].size.height : 0;
-    }
-    
+
     CGFloat btnHeight = 60;
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - navHeight - btnHeight ) style:UITableViewStylePlain];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height - btnHeight) style:UITableViewStylePlain];
     self.tableView.delegate = self;
     self.tableView.separatorStyle = NO;
     self.tableView.dataSource = self;
@@ -47,7 +41,7 @@
     [self.tableView setEditing:YES animated:YES];
     [self.view addSubview:self.tableView];
     
-    self.downLoadBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - navHeight - btnHeight, self.view.frame.size.width, btnHeight)];
+    self.downLoadBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - btnHeight, self.view.frame.size.width, btnHeight)];
     [_downLoadBtn setBackgroundColor:[UIColor colorWithHexString:kDownLoadColor]];
     [_downLoadBtn setTitle:@"开始下载" forState:UIControlStateNormal];
     [_downLoadBtn addTarget:self action:@selector(downLoadClick) forControlEvents:UIControlEventTouchUpInside];
@@ -62,6 +56,7 @@
     [btn.titleLabel setFont:[UIFont systemFontOfSize:12.0f]];
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:btn];
     self.navigationItem.rightBarButtonItem = item;
+    
 }
 
 - (void)loadDBData {
@@ -92,7 +87,6 @@
     }else {
         [self cancelSelectAll];
     }
-    
 }
 
 - (void)selectAll {
@@ -120,17 +114,16 @@
     return _datas.count;
 }
 
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     WQDownLoadChooseCell *cell = [WQDownLoadChooseCell cellWithTableView:tableView cellForRowAtIndexPath:indexPath];
     NSString *engineKey = _datas[indexPath.row].engineKey;
     if (_dbContainerData[engineKey]) {
         cell.video = _dbContainerData[engineKey];
-        cell.userInteractionEnabled = NO;
+        cell.canDownload = NO;
     }else {
         cell.video = _datas[indexPath.row];
-        cell.userInteractionEnabled = YES;
+        cell.canDownload = YES;
     }
     return cell;
 }
@@ -146,12 +139,10 @@
     }else {
         return UITableViewCellEditingStyleNone;
     }
-    
 }
 
 - (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath {
     return YES;
 }
-
 
 @end

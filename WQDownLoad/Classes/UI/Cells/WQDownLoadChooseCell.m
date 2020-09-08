@@ -8,6 +8,7 @@
 
 #import "WQDownLoadChooseCell.h"
 #import <YYKit/YYKit.h>
+#import "WQDownLoadModel.h"
 
 @interface WQDownLoadChooseCell ()
 ///课程名字
@@ -41,6 +42,7 @@
 
 - (void)configUI {
     
+    self.tintColor = [UIColor colorWithHexString:kDownLoadColor];
     self.selectionStyle = UITableViewCellSelectionStyleDefault;
     self.titleLab = [[UILabel alloc] init];
     self.titleLab.numberOfLines = 2;
@@ -51,15 +53,12 @@
     self.lineView = [[UIView alloc] init];
     self.lineView.backgroundColor = [UIColor lightGrayColor];
     
-    
     self.videoSizeLab = [[UILabel alloc] init];
     self.videoSizeLab.font = [UIFont systemFontOfSize:12.0f];
     self.videoSizeLab.textColor = [UIColor grayColor];
     
-    
     [self.contentView addSubview:self.titleLab];
     [self.contentView addSubview:self.lineView];
-
     [self.contentView addSubview:self.videoSizeLab];
     [self.contentView addSubview:self.videoDurationLab];
     
@@ -81,5 +80,20 @@
     self.videoSizeLab.text = video.download_state ? @"下载任务已存在":@"可加入下载";
 }
 
+- (void)setCanDownload:(BOOL)canDownload {
+    
+    _canDownload = canDownload;
+    
+    if (canDownload) {
+        self.backgroundColor = [UIColor whiteColor];
+        self.titleLab.textColor = [UIColor blackColor];
+        self.userInteractionEnabled = YES;
+    } else {
+        self.backgroundColor = [UIColor colorWithHexString:@"#EBEBEB"];
+        self.titleLab.textColor = [UIColor grayColor];
+        self.userInteractionEnabled = NO;
+    }
+    self.videoSizeLab.text = canDownload ? @"可加入下载" : @"下载任务已存在";
+}
 
 @end

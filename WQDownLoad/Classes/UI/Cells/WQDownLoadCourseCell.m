@@ -8,6 +8,7 @@
 
 #import "WQDownLoadCourseCell.h"
 #import <SDWebImage/UIImageView+WebCache.h>
+#import <YYKit/UIColor+YYAdd.h>
 
 @interface WQDownLoadCourseCell ()
 
@@ -35,7 +36,7 @@
 }
 
 - (void)configUI {
-    
+     self.tintColor = [UIColor colorWithHexString:kDownLoadColor];
     [self.contentView addSubview:self.courseImg];
     [self.contentView addSubview:self.courseLab];
 }
@@ -43,7 +44,7 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
     self.courseImg.frame = CGRectMake(15, 18, 100, 64);
-    self.courseLab.frame = CGRectMake(125, 18, self.contentView.frame.size.width - 45, 64);
+    self.courseLab.frame = CGRectMake(125, 18, self.contentView.frame.size.width - 140, 64);
 }
 
 - (UIImageView *)courseImg {
@@ -63,6 +64,7 @@
         } else {
              _courseLab.font = [UIFont systemFontOfSize:14.0f ];
         }
+        _courseLab.numberOfLines = 2;
     }
     return _courseLab;
 }
@@ -72,6 +74,6 @@
     _downLoadModel = downLoadModel;
     self.courseLab.text = downLoadModel.video_title;
    [self.courseImg sd_setImageWithURL:[NSURL URLWithString:downLoadModel.cover_img_url]];
-    
 }
+
 @end

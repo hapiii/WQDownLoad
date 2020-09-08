@@ -131,7 +131,7 @@
     
 }
 
-#pragma mark - NSURLSessionDataDelegate>
+#pragma mark - NSURLSessionDataDelegate
 
 - (void)engineTask:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveResponse:(NSURLResponse *)response completionHandler:(void (^)(NSURLSessionResponseDisposition))completionHandler {
     
@@ -179,8 +179,6 @@
     if (_taskDelegate && [_taskDelegate respondsToSelector:@selector(downloadEngine:didReceiveBytes:)]) {
         [_taskDelegate downloadEngine:self didReceiveBytes:self.video];
     }
-    
-    
 }
 
 - (void)engineTask:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error {
@@ -193,7 +191,12 @@
         [self.stream close];
        
     }else {//NSURLErrorDomain Code=-997 "Lost connection to background transfer service"
-        self.video.download_state = WQDownLoadVideoStateError;
+        if (error.code == -1001) {//取消
+
+            self.video.download_state = WQDownLoadVideoStateSuspended;
+        }else {
+            self.video.download_state = WQDownLoadVideoStateError;
+        }
         [[WQDownLoadModelDBManager shareMnager] updateVideo:self.video];
         if (_taskDelegate && [_taskDelegate respondsToSelector:@selector(downloadEngine:handleEngineErrorWithDownloadModel:downloadError:)]) {
             [_taskDelegate downloadEngine:self handleEngineErrorWithDownloadModel:self.video downloadError:error];

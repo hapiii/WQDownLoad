@@ -4,6 +4,11 @@
 [![Version](https://img.shields.io/cocoapods/v/WQDownLoad.svg?style=flat)](https://cocoapods.org/pods/WQDownLoad)
 [![License](https://img.shields.io/cocoapods/l/WQDownLoad.svg?style=flat)](https://cocoapods.org/pods/WQDownLoad)
 [![Platform](https://img.shields.io/cocoapods/p/WQDownLoad.svg?style=flat)](https://cocoapods.org/pods/WQDownLoad)
+[![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg?style=flat)](https://travis-ci.org/hapiii/HPThemeKit)
+[![Support](https://img.shields.io/badge/Support-iOS%208%2B-blue.svg?style=flat)](https://www.apple.com/nl/ios/)
+
+## Effect
+![效果图](https://github.com/hapiii/WQDownLoad/blob/master/imgs/demo.gif)
 
 ## Usage
 1. AppDelegate 里 在didFinishLaunchingWithOptions里实现:
@@ -118,7 +123,11 @@ for (int i = 0; i < _datas.count; i++) {
 ```
 
 ## Architecture
-下载采用
+
+* 视频配套信息存储基于FMDB, 
+* 下载实现基于NSURLSessionDataTask
+* audio airplay and picture in picture后台播放无声音频
+
 #### WQDownLoadModel
 
 为FMDB实体模型类,包含数据库要存储的数据以及部分getter属性,video_parameter参数用于扩展其他参数

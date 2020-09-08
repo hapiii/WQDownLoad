@@ -114,22 +114,26 @@
     self.videoDurationLab.text = [dateFormatter stringFromDate:video.create_time];
     self.videoSizeLab.text = [NSString stringWithFormat:@"%@/%@",[self transformedValue:video.completed_size],[self transformedValue:video.total_size]];
     
+
+    NSBundle *sliderBundle = [NSBundle bundleForClass:[self class]];
+    NSString *resourceBundlePath = [[sliderBundle bundlePath] stringByAppendingPathComponent:@"WQDownLoad.bundle"];
+    NSBundle *bundle = [NSBundle bundleWithPath:resourceBundlePath];
     switch (video.download_state) {
         case WQDownLoadVideoStatePrepare:
         case WQDownLoadVideoStateReadying:{
-            [self.actionBtn setImage:[UIImage imageNamed:@"download_wait"] forState:UIControlStateNormal];
+                [self.actionBtn setImage:[UIImage imageNamed:@"download_wait" inBundle:bundle compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
         }break;
         case WQDownLoadVideoStateError:{
-            [self.actionBtn setImage:[UIImage imageNamed:@"download_error"] forState:UIControlStateNormal];
+            [self.actionBtn setImage:[UIImage imageNamed:@"download_error" inBundle:bundle compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
         }break;
         case WQDownLoadVideoStateSuspended:{
-            [self.actionBtn setImage:[UIImage imageNamed:@"download_begin"] forState:UIControlStateNormal];
+            [self.actionBtn setImage:[UIImage imageNamed:@"download_begin" inBundle:bundle compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
         }break;
         case WQDownLoadVideoStateCompleted:{
-            [self.actionBtn setImage:[UIImage imageNamed:@"download_play"] forState:UIControlStateNormal];
+            [self.actionBtn setImage:[UIImage imageNamed:@"download_play" inBundle:bundle compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
         }break;
         case WQDownLoadVideoStateDownloading:{
-            [self.actionBtn setImage:[UIImage imageNamed:@"download_suspended"] forState:UIControlStateNormal];
+            [self.actionBtn setImage:[UIImage imageNamed:@"download_suspended" inBundle:bundle compatibleWithTraitCollection:nil] forState:UIControlStateNormal];
             
         }break;
             

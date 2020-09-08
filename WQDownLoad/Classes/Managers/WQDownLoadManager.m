@@ -47,7 +47,6 @@ static WQDownLoadManager *manager;
         
         _listeners = [[NSMutableArray alloc] init];
         _canUseWWAN = NO;
-        _isOpenBackgroundModel = YES;
         //_enableAutoStartDownlaod = YES;
         _netMonitor = [AFNetworkReachabilityManager sharedManager];
         [_netMonitor startMonitoring];
@@ -147,22 +146,13 @@ static WQDownLoadManager *manager;
     __weak typeof (self) wself = self;
     
     if (videoInfo.download_url && videoInfo.download_url.length > 0) {
-        videoInfo.download_state = WQDownLoadVideoStateReadying;
-        [self createEngineWithVideoModel:videoInfo];
-        errorHandle(YES,@"加入下载成功!");
+        [self insertVideoInfo:videoInfo errorHandle:errorHandle];
+        
     } else {
         [self loadDownLoadUrl:videoInfo.video_id successHaldle:^(NSString *downloadUrl) {
-            
-            __strong typeof (wself) self = wself;
             videoInfo.download_url = downloadUrl;
-            if(![[WQDownLoadModelDBManager shareMnager] insertVideo:videoInfo]) {
-                errorHandle(NO,@"下载数据初始化失败!");
-                return;
-            } else {
-                videoInfo.download_state = WQDownLoadVideoStateReadying;
-                [self createEngineWithVideoModel:videoInfo];
-                errorHandle(YES,@"加入下载成功!");
-            }
+            __strong typeof (wself) self = wself;
+            [self insertVideoInfo:videoInfo errorHandle:errorHandle];
             
         } errorHandle:^(NSString *errorMsg) {
             errorHandle(NO,errorMsg);
@@ -173,6 +163,17 @@ static WQDownLoadManager *manager;
         if (listenerObj && [listenerObj respondsToSelector:@selector(downloadManagerDidAddTask:)]) {
             [listenerObj downloadManagerDidAddTask:videoInfo];
         }
+    }
+}
+
+- (void)insertVideoInfo:(WQDownLoadModel *)videoInfo errorHandle:(void(^)(BOOL success,  NSString *errorMsg))errorHandle {
+    if(![[WQDownLoadModelDBManager shareMnager] insertVideo:videoInfo]) {
+        errorHandle(NO,@"下载数据初始化失败!");
+        return;
+    } else {
+        videoInfo.download_state = WQDownLoadVideoStateReadying;
+        [self createEngineWithVideoModel:videoInfo];
+        errorHandle(YES,@"加入下载成功!");
     }
 }
 
@@ -258,13 +259,6 @@ static WQDownLoadManager *manager;
         [self currectEngineOperation:engine isAdd:NO];
         [self refreshDownLoadTask:NO];
     }
-    for (id listenerObj in self.listeners) {
-        if (listenerObj && [listenerObj respondsToSelector:@selector(downloadManagerDidPause:)]) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [listenerObj downloadManagerDidPause:downloadTaskModel];
-            });
-        }
-    }
 }
 
 
@@ -297,21 +291,22 @@ static WQDownLoadManager *manager;
             break;
         }
     }
-    //WQTODO
-    for (WQDownLoadSessionEngine *engine in self.allEngines) {//错误
-        if (self.currectEngines.count < maxDownLoadNum) {
-            if (engine.video.download_state == WQDownLoadVideoStateError) {
-                NSLog(@"download_queue_插入ErrorEngines 目前个数->%lu",(unsigned long)self.currectEngines.count);
-                
-                [self currectEngineOperation:engine isAdd:YES];
-            }
-        } else {
-            NSLog(@"download_queue_已超过最大下载量 结束循环");
-            break;
-        }
-    }
-    
     if (loadSuspend) {
+        //WQTODO
+        for (WQDownLoadSessionEngine *engine in self.allEngines) {//错误
+            if (self.currectEngines.count < maxDownLoadNum) {
+                if (engine.video.download_state == WQDownLoadVideoStateError) {
+                    NSLog(@"download_queue_插入ErrorEngines 目前个数->%lu",(unsigned long)self.currectEngines.count);
+                    
+                    [self currectEngineOperation:engine isAdd:YES];
+                }
+            } else {
+                NSLog(@"download_queue_已超过最大下载量 结束循环");
+                break;
+            }
+        }
+        
+        
         for (WQDownLoadSessionEngine *engine in self.allEngines) {//暂停
             if (self.currectEngines.count < maxDownLoadNum) {
                 if (engine.video.download_state == WQDownLoadVideoStateSuspended) {

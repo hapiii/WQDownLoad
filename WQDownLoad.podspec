@@ -18,7 +18,7 @@ Pod::Spec.new do |s|
 #   * Finally, don't worry about the indent, CocoaPods strips it!
 
   s.description      = <<-DESC
-iOS 下载框架,视频配套信息存储基于FMDB, 下载实现基于NSURLSessionDataTask+audio airplay and picture in picture后台播放无声音频 (NSURLSessionDownloadTask功能未完善,后台下载数据库操作,resumeData问题)
+iOS 下载框架,视频配套信息存储基于FMDB, 下载实现基于NSURLSessionDataTask + audio airplay and picture 后台播放无声音频 (NSURLSessionDownloadTask功能未完善,后台下载数据库操作,resumeData问题)
                        DESC
 
   s.homepage         = 'https://github.com/hapiii/WQDownLoad'

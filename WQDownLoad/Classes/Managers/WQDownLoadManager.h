@@ -21,14 +21,12 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong ,readonly) NSMutableDictionary <NSString *, WQDownLoadSessionEngine *> *allEngineHash;
 
 @property (nonatomic, strong ,readonly) NSMutableArray <WQDownLoadSessionEngine *> *allEngines;
-///是否打开后台下载功能,默认YES
-@property (nonatomic, assign) BOOL isOpenBackgroundModel;
 //能否使用流量
 @property (nonatomic, assign) BOOL canUseWWAN;
 
 ///单例
 + (WQDownLoadManager *)shareInstance;
-
+///APP启动后开始下载未完成任务
 - (void)applicationDidFinishLaunching;
 
 ///监听

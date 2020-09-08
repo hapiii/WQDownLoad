@@ -69,7 +69,7 @@
          NSString *soundPath = [[NSBundle mainBundle]pathForResource:@"slice" ofType:@"m4a"];
         NSURL *soundUrl = [NSURL fileURLWithPath:soundPath];
         _audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:soundUrl error:nil];
-        _audioPlayer.volume = 0.01;//范围为（0到1）；
+        _audioPlayer.volume = 0.01;
         _audioPlayer.numberOfLoops =-1;
        
         _audioPlayer.currentTime = 0;

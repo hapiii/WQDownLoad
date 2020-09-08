@@ -7,12 +7,21 @@
 //
 
 #import "WQAppDelegate.h"
+#import "WQViewController.h"
+#import <WQDownLoadManager.h>
 
 @implementation WQAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Override point for customization after application launch.
+    [[WQDownLoadManager shareInstance] applicationDidFinishLaunching];
+    
+    WQViewController *vc = [[WQViewController alloc] init];
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
+    self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    self.window.backgroundColor = [UIColor whiteColor];
+    self.window.rootViewController = nav;
+    [self.window makeKeyAndVisible];
     return YES;
 }
 
